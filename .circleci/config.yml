@@ -2,7 +2,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: islam3zzat/zeit-base:1.0.0
+      - image: circleci/node:10
 
 dependencies:
   override:
@@ -24,6 +24,9 @@ jobs: # a collection of steps
       - run:
           name: install-dependencies
           command: yarn
+      - run:
+          name: add-now
+          command: yarn global add now
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
