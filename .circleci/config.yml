@@ -31,11 +31,6 @@ jobs: # a collection of steps
       - run: # run tests
           name: test
           command: npm test
-      - run:
-          name: pwd-now
-          command: |
-            ls
-            pwd
   deploy:
     working_directory: ~/islam-farg # directory where steps will run
     executor: node-executor
@@ -60,7 +55,7 @@ jobs: # a collection of steps
       - run:
           name: deploy-now
           command: |
-            pwd
+            now -t ${NOW_TOKEN}
             ls 
             echo __${NOW_TOKEN}__
             URL=$(
