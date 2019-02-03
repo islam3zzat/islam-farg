@@ -51,7 +51,10 @@ jobs: # a collection of steps
       - run:
           name: deploy-now
           command: |
-            URL=$(now -t ${NOW_TOKEN})
+            echo __${NOW_TOKEN}__
+            URL=$(
+              now -t ${NOW_TOKEN}
+            )
             now -t ${NOW_TOKEN} alias ${URL} https://${CIRCLE_BRANCH}.islam-farg.ml/
             echo __${URL}__
             echo https://${CIRCLE_BRANCH}.islam-farg.ml/
