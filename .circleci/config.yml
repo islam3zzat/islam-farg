@@ -37,18 +37,16 @@ jobs: # a collection of steps
       - run:
           name: deploy-now
           command: |
-            sudo npm install -g now
             URL=$(now -t ${NOW_TOKEN})
-            now -t ${NOW_TOKEN} alias https://islam-farg.ml/
+            now -t ${NOW_TOKEN} alias ${URL} https://islam-farg.ml/
   branch_deploy:
     executor: node-executor
     steps:
       - run:
           name: deploy-now
           command: |
-            sudo npm install -g now
             URL=$(now -t ${NOW_TOKEN})
-            now -t ${NOW_TOKEN} alias  https://${CIRCLE_BRANCH}.islam-farg.ml/
+            now -t ${NOW_TOKEN} alias ${URL} https://${CIRCLE_BRANCH}.islam-farg.ml/
             echo __${URL}__
             echo https://${CIRCLE_BRANCH}.islam-farg.ml/
 
