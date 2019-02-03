@@ -10,7 +10,7 @@ dependencies:
   cache_directories:
     - ~/.cache/yarn
   pre:
-    - yarn global add now
+    - sudo npm install -g now
 
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
@@ -36,7 +36,7 @@ jobs: # a collection of steps
     steps:
       - run:
           name: add-now
-          command: yarn global add now
+          command: sudo npm install -g now
       - run:
           name: deploy-now
           command: |
@@ -47,7 +47,7 @@ jobs: # a collection of steps
     steps:
       - run:
           name: add-now
-          command: yarn global add now
+          command: sudo npm install -g now
       - run:
           name: deploy-now
           command: |
