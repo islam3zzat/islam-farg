@@ -15,5 +15,11 @@
     },
     { "src": "^/precache-manifest.(.*)", "dest": "/precache-manifest.$1" },
     { "src": "^/(.*)", "dest": "/index.html" }
-  ]
+  ],
+  "build": {
+    "env": {
+      "NOW_TOKEN": "@now-token",
+      "NODE_ENV": "production"
+    }
+  }
 }
