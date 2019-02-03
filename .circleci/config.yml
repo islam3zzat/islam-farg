@@ -1,9 +1,21 @@
-version: 2 # use CircleCI 2.0
+version: 2.1
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:10
+
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+  pre:
+    - yarn global add now
+
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/awsome-blog # directory where steps will run
-    docker: # run the steps with Docker
-      - image: circleci/node:10 # ...with this image as the primary container; this is where all `steps` will run
+    executor: node-executor
     steps: # a collection of executable commands
       - checkout # special step to check out source code to working directory
       - restore_cache: # special step to restore the dependency cache
@@ -20,25 +32,23 @@ jobs: # a collection of steps
           name: test
           command: npm test
   deploy:
-    docker: # run the steps with Docker
-      - image: circleci/node:10 # ...with this image as the primary container; this is where all `steps` will run
+    executor: node-executor
     steps:
       - run:
           name: deploy-now
           command: |
             sudo npm install -g now
             URL=$(now -t ${NOW_TOKEN})
-            now -t ${NOW_TOKEN} alias ${URL} https://islam-farg.ml/
+            now -t ${NOW_TOKEN} alias https://islam-farg.ml/
   branch_deploy:
-    docker: # run the steps with Docker
-      - image: circleci/node:10 # ...with this image as the primary container; this is where all `steps` will run
+    executor: node-executor
     steps:
       - run:
           name: deploy-now
           command: |
             sudo npm install -g now
             URL=$(now -t ${NOW_TOKEN})
-            now -t ${NOW_TOKEN} alias ${URL}  https://${CIRCLE_BRANCH}.islam-farg.ml/
+            now -t ${NOW_TOKEN} alias  https://${CIRCLE_BRANCH}.islam-farg.ml/
             echo __${URL}__
             echo https://${CIRCLE_BRANCH}.islam-farg.ml/
 

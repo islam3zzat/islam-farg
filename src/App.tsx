@@ -17,7 +17,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Islam Farg
+            Islam Farg 2
           </a>
         </header>
       </div>
