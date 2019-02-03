@@ -31,6 +31,10 @@ jobs: # a collection of steps
       - run: # run tests
           name: test
           command: npm test
+      - run:
+          name: pwd-now
+          command: |
+            pwd
   deploy:
     working_directory: ~/awsome-blog # directory where steps will run
     executor: node-executor
