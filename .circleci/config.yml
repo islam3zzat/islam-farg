@@ -2,7 +2,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: circleci/node:10
+      - image: islam3zzat/zeit-base:1.0.0
 
 dependencies:
   override:
