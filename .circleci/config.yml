@@ -9,15 +9,13 @@ dependencies:
     - yarn
   cache_directories:
     - ~/.cache/yarn
-  pre:
-    - sudo npm install -g now
 
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     working_directory: ~/islam-farg # directory where steps will run
     executor: node-executor
     steps: # a collection of executable commands
-      - checkout # special step to check out source code to working directory
+      - checkout
       - restore_cache: # special step to restore the dependency cache
           # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
           key: dependency-cache-{{ checksum "package.json" }}
@@ -35,30 +33,25 @@ jobs: # a collection of steps
     working_directory: ~/islam-farg # directory where steps will run
     executor: node-executor
     steps:
-      - checkout # special step to check out source code to working directory
-      - run:
-          name: add-now
-          command: sudo npm install -g now
+      - checkout
       - run:
           name: deploy-now
           command: |
-            URL=$(now -t ${NOW_TOKEN})
-            now -t ${NOW_TOKEN} alias ${URL} https://islam-farg.ml/
+            URL=$(npx now -t ${NOW_TOKEN})
+            npx now -t ${NOW_TOKEN} alias ${URL} https://islam-farg.ml/
   branch_deploy:
     working_directory: ~/islam-farg # directory where steps will run
     executor: node-executor
     steps:
-      - checkout # special step to check out source code to working directory
+      - checkout
       - run:
           name: deploy-now
           command: |
-            ls 
-            echo __${NOW_TOKEN}__
             URL=$(
               npx now -t ${NOW_TOKEN}
             )
             npx now -t ${NOW_TOKEN} alias ${URL} https://${CIRCLE_BRANCH}.islam-farg.ml/
-            echo __${URL}__
+            echo ${URL}
             echo https://${CIRCLE_BRANCH}.islam-farg.ml/
 
 workflows:
